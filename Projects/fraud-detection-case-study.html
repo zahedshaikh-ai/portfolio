@@ -1,1158 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../img/zahed.png">
-  <title>Fraud Detection System | Zahed Shaikh</title>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* ===== FRAUD DETECTION RED THEME VARIABLES ===== */
-    :root{
-      --dark-bg: #0a0a0a;
-      --darker-bg: #050505;
-      --card-bg: #151515;
-      --accent: #ef4444;       /* red accent */
-      --accent-light: #f87171;
-      --text: #f5f5f5;
-      --text-secondary: #a0a0a0;
-      --transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      --glass: rgba(255,255,255,0.04);
-      --nav-height: 64px;
-      
-      /* Fraud Detection specific theme colors */
-      --fraud-primary: #ef4444;
-      --fraud-secondary: #dc2626;
-      --fraud-accent: #f87171;
-      --fraud-analytics: #fca5a5;
-      
-      /* Background animation variables */
-      --pulse-duration: 8s;
-      --float-duration: 20s;
-      --node-opacity: 0.08;
-      
-      /* Button theme variables */
-      --btn-gradient-start: var(--fraud-primary);
-      --btn-gradient-end: var(--fraud-secondary);
-      --btn-glow: rgba(239, 68, 68, 0.4);
-      --btn-radius: 12px;
-      --btn-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      
-      /* Typography variables */
-      --heading-gradient: linear-gradient(135deg, var(--fraud-primary), var(--fraud-analytics));
-      --text-glow: 0 0 20px rgba(239, 68, 68, 0.3);
-    }
-
-    html.light {
-      --dark-bg: #ffffff;
-      --darker-bg: #f6f7fb;
-      --card-bg: #ffffff;
-      --text: #0b1220;
-      --text-secondary: #4b5563;
-      --glass: rgba(11,18,32,0.02);
-      --node-opacity: 0.04;
-      --btn-glow: rgba(239, 68, 68, 0.2);
-    }
-
-    /* ===== ANIMATED SECURITY BACKGROUND ===== */
-    .security-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .security-node {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--fraud-primary), transparent);
-      opacity: var(--node-opacity);
-      filter: blur(15px);
-      animation: security-pulse var(--pulse-duration) infinite ease-in-out;
-      will-change: transform;
-    }
-
-    .node-1 {
-      width: 250px;
-      height: 250px;
-      top: 15%;
-      left: 8%;
-      animation-duration: 9s;
-      background: radial-gradient(circle, var(--fraud-primary), transparent);
-    }
-
-    .node-2 {
-      width: 180px;
-      height: 180px;
-      top: 65%;
-      right: 12%;
-      animation-duration: 7s;
-      animation-delay: -2s;
-      background: radial-gradient(circle, var(--fraud-secondary), transparent);
-    }
-
-    .node-3 {
-      width: 220px;
-      height: 220px;
-      bottom: 25%;
-      left: 18%;
-      animation-duration: 10s;
-      animation-delay: -4s;
-      background: radial-gradient(circle, var(--fraud-analytics), transparent);
-    }
-
-    .node-4 {
-      width: 160px;
-      height: 160px;
-      top: 35%;
-      right: 22%;
-      animation-duration: 8s;
-      animation-delay: -6s;
-      background: radial-gradient(circle, var(--fraud-primary), transparent);
-    }
-
-    @keyframes security-pulse {
-      0%, 100% {
-        transform: scale(1);
-        opacity: var(--node-opacity);
-      }
-      50% {
-        transform: scale(1.1);
-        opacity: calc(var(--node-opacity) * 1.5);
-      }
-    }
-
-    /* Security connection lines */
-    .security-connection {
-      position: absolute;
-      background: linear-gradient(90deg, transparent, var(--fraud-primary), transparent);
-      height: 1px;
-      opacity: 0.04;
-      animation: security-float var(--float-duration) infinite ease-in-out;
-    }
-
-    @keyframes security-float {
-      0%, 100% { 
-        transform: translateX(0) translateY(0);
-        opacity: 0.03;
-      }
-      25% { 
-        transform: translateX(10px) translateY(-5px);
-        opacity: 0.06;
-      }
-      50% { 
-        transform: translateX(-5px) translateY(8px);
-        opacity: 0.04;
-      }
-      75% { 
-        transform: translateX(-8px) translateY(-3px);
-        opacity: 0.07;
-      }
-    }
-
-    /* ===== BASE STYLES ===== */
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection System | Zahed Shaikh</title>
     
-    /* Smooth scrolling */
-    html {
-      scroll-behavior: smooth;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com/css2">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Pixelify+Sans:wght@400;500;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    body{
-      font-family:'Inter',sans-serif;
-      background:var(--dark-bg);
-      color:var(--text);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      overflow-x:hidden;
-    }
-    .container{max-width:1200px;margin:0 auto;padding:0 20px}
-    a{color:inherit;text-decoration:none}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+    <style>
+        :root {
+            --bg: #050505;
+            --text: #ffffff;
+            --accent: #888888;
+        }
 
-    /* ===== ENHANCED TYPOGRAPHY ===== */
-    .gradient-heading {
-      background: var(--heading-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      display: inline-block;
-    }
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { display: none; }
 
-    .text-glow {
-      text-shadow: var(--text-glow);
-    }
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none !important;
+        }
 
-    .section-subtitle {
-      background: linear-gradient(135deg, var(--text-secondary), var(--fraud-analytics));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-weight: 500;
-    }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* ===== SCROLL ANIMATIONS ===== */
-    [data-animate] {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+        a { color: inherit; text-decoration: none; }
+        
+        #webgl-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
 
-    [data-animate].is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        .scroll-tracker {
+            position: fixed; top: 0; right: 80px; height: 100vh; width: 1px;
+            background: rgba(255, 255, 255, 0.1); z-index: 999;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .rocket-ship {
+            position: absolute; bottom: 0; left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            color: white; font-size: 18px;
+            transition: bottom 0.1s linear;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+        }
 
-    /* ===== PROGRESS BAR ===== */
-    #progress { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      height: 3px; 
-      background: linear-gradient(90deg, var(--fraud-primary), var(--fraud-analytics)); 
-      width: 0%; 
-      z-index: 9999; 
-      transition: width .15s linear; 
-    }
+        .sidebar-nav {
+            position: fixed; top: 50%; right: 20px; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 20px; z-index: 1000;
+        }
+        .sidebar-nav a {
+            color: var(--accent); font-size: 20px; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative; display: flex; justify-content: center; align-items: center;
+            width: 40px; height: 40px; border-radius: 50%;
+        }
+        .sidebar-nav a:hover {
+            color: white; background: rgba(255,255,255,0.1); transform: scale(1.1);
+        }
+        .sidebar-nav a::after {
+             content: attr(aria-label);
+             position: absolute; right: 50px; 
+             background: white; color: black; padding: 4px 8px; border-radius: 4px;
+             font-size: 10px; font-weight: 700; text-transform: uppercase;
+             opacity: 0; pointer-events: none; transition: opacity 0.3s;
+             white-space: nowrap;
+        }
+        .sidebar-nav a:hover::after { opacity: 1; }
+        .sidebar-nav svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+        .sidebar-divider {
+            width: 40px; height: 1px; background: rgba(255,255,255,0.1); margin:10px 0;
+        }
 
-    /* ===== MODERN MENU ===== */
-    .modern-menu{
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:10px 16px;
-      background: transparent;
-      border-radius:12px;
-      transition:var(--transition);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-      border: 1px solid transparent;
-      backdrop-filter: blur(0px);
-      width:auto;
-      height:var(--nav-height);
-    }
-    .modern-menu.menu-scrolled{
-      top:12px;
-      padding:8px 14px;
-      background: linear-gradient(180deg, rgba(11,12,14,0.6), rgba(11,12,14,0.45));
-      border: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(8px);
-      transform: translateX(-50%) translateY(-2px);
-    }
-    html.light .modern-menu.menu-scrolled{
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
-      border: 1px solid rgba(10,15,25,0.06);
-    }
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; width: 8px; height: 8px; 
+            background-color: white; border-radius: 50%; z-index: 9999; pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-outline {
+            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50%; 
+            z-index: 9999; pointer-events: none; transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
 
-    .logo{
-      font-family:'Playfair Display',serif;
-      font-size:1.1rem;
-      font-weight:700;
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      gap:1px;
-    }
-    .logo-accent{
-      background: var(--heading-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-weight:700;
-    }
-    .nav-container{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .nav-button{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      background:transparent;
-      border:none;
-      border-radius:8px;
-      padding:8px 12px;
-      margin:0 4px;
-      cursor:pointer;
-      color:var(--text-secondary);
-      transition:var(--transition);
-      font-size:14px;
-      text-decoration:none;
-    }
-    .nav-button:hover{ color:var(--text); background:var(--glass) }
-    .nav-button.selected{ background: rgba(239,68,68,0.12); color:var(--accent) }
-    .nav-button:focus { 
-      outline: 2px solid var(--fraud-primary); 
-      outline-offset: 2px;
-    }
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 40px 120px 40px 60px; position: fixed; width: 100%; top: 0;
+            z-index: 100; mix-blend-mode: difference;
+        }
+        .logo {
+            font-family: 'Pixelify Sans', sans-serif; font-size: 24px; 
+            font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+        }
 
-    .menu-toggle{
-      display:none;
-      background:none;
-      border:none;
-      width:38px;height:28px;
-      gap:4px;
-      flex-direction:column;
-      justify-content:center;
-      cursor:pointer;
-    }
-    .menu-toggle span{height:3px;width:100%;background:var(--text);border-radius:3px;transition:var(--transition)}
-    .menu-toggle.active span:nth-child(1){ transform: rotate(-45deg) translate(-5px,6px)}
-    .menu-toggle.active span:nth-child(2){ opacity:0}
-    .menu-toggle.active span:nth-child(3){ transform: rotate(45deg) translate(-5px,-6px)}
-    .menu-toggle:focus {
-      outline: 2px solid var(--fraud-primary);
-      outline-offset: 2px;
-    }
+        main { position: relative; z-index: 10; }
+        .container { padding: 0 120px 0 60px; max-width: 1200px; margin: 0 auto; }
 
-    /* ===== ENHANCED HERO SECTION ===== */
-    .hero{ 
-      padding: 160px 0 80px; 
-      text-align:center;
-      position: relative;
-    }
-    .project-tag{ 
-      display:inline-block; 
-      background: linear-gradient(135deg, var(--fraud-primary), var(--fraud-secondary));
-      color: white;
-      padding: 8px 20px;
-      border-radius: 20px; 
-      font-size: 0.9rem; 
-      font-weight: 600; 
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-    }
-    .hero h1{ 
-      font-size:3.5rem; 
-      font-weight:700; 
-      margin-bottom:1.5rem; 
-      line-height:1.1;
-      background: var(--heading-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: var(--text-glow);
-    }
-    .hero p{ 
-      font-size:1.2rem; 
-      color:var(--text-secondary); 
-      max-width:600px; 
-      margin:0 auto 3rem;
-      font-weight: 400;
-    }
+        /* Case Study Specific */
+        .hero {
+            min-height: 80vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: flex-start; text-align: left;
+            padding-top: 100px;
+        }
+        .project-tag {
+            font-family: 'Syne', sans-serif; font-size: 14px; text-transform: uppercase;
+            color: var(--accent); border: 1px solid rgba(255,255,255,0.2); 
+            padding: 8px 16px; border-radius: 50px; margin-bottom: 2rem;
+            display: inline-block;
+        }
+        .hero h1 {
+            font-family: 'Pixelify Sans', sans-serif; font-size: clamp(40px, 6vw, 80px);
+            line-height: 1.1; margin-bottom: 30px;
+        }
+        .hero p {
+            font-size: 1.2rem; color: rgba(255,255,255,0.8); max-width: 800px;
+            margin-bottom: 40px; line-height: 1.6;
+        }
 
-    /* Project meta grid */
-    .project-meta{ 
-      display:grid; 
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-      gap:2rem; 
-      max-width:800px; 
-      margin:0 auto;
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      padding: 2rem;
-    }
-    .meta-item h4{ 
-      color:var(--text-secondary); 
-      font-size:0.9rem; 
-      text-transform:uppercase; 
-      letter-spacing:1px; 
-      margin-bottom:0.5rem;
-      font-weight: 600;
-    }
-    .meta-item p{ 
-      font-weight:600; 
-      font-size:1.1rem;
-      color: var(--text);
-    }
+        .project-meta {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px; width: 100%; border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 40px;
+        }
+        .meta-item h4 {
+            font-family: 'Syne', sans-serif; font-size: 12px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 10px; letter-spacing: 1px;
+        }
+        .meta-item p {
+            font-size: 1rem; color: white; margin: 0;
+        }
 
-    /* ===== CONTENT SECTIONS ===== */
-    .content-section{ 
-      padding:100px 0;
-      position: relative;
-    }
-    .section-header{
-      text-align:center;
-      margin-bottom:4rem;
-    }
-    .section-header h2{ 
-      font-size:2.5rem; 
-      font-weight:700; 
-      margin-bottom:1rem;
-      background: var(--heading-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .section-header p{ 
-      font-size:1.1rem; 
-      color:var(--text-secondary); 
-      max-width:600px; 
-      margin:0 auto;
-      font-weight: 400;
-    }
+        .content-section { padding: 100px 0; }
+        .section-header { margin-bottom: 60px; }
+        .section-header h2 {
+            font-family: 'Pixelify Sans', sans-serif; font-size: 3rem; margin-bottom: 20px;
+        }
+        .section-subtitle {
+             font-family: 'Syne', sans-serif; font-size: 1.2rem; color: var(--accent);
+        }
 
-    .content-grid{ 
-      display:grid; 
-      grid-template-columns:1fr 1fr; 
-      gap:4rem; 
-      align-items:center;
-    }
-    .content-text h3{ 
-      font-size:1.5rem; 
-      font-weight:600; 
-      margin-bottom:1rem;
-      color: var(--text);
-    }
-    .content-text p{ 
-      color:var(--text-secondary); 
-      margin-bottom:1.5rem;
-      line-height: 1.7;
-    }
-    .content-text ul {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      padding-left: 1.5rem;
-    }
-    .content-text li {
-      margin-bottom: 0.5rem;
-      line-height: 1.6;
-    }
-    .content-image{ 
-      border-radius:16px; 
-      overflow:hidden; 
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      transition: transform 0.5s ease;
-    }
-    .content-image:hover {
-      transform: translateY(-8px);
-    }
-    .content-image img{ 
-      width:100%; 
-      height:auto; 
-      display:block;
-      transition: transform 0.5s ease;
-    }
-    .content-image:hover img {
-      transform: scale(1.05);
-    }
+        .content-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        }
+        .content-text h3 {
+            font-family: 'Syne', sans-serif; font-size: 2rem; margin-bottom: 20px;
+        }
+        .content-text p {
+            color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 20px; font-size: 1.1rem;
+        }
+        .content-text ul {
+            list-style: none; padding-left: 0; margin-bottom: 20px;
+        }
+        .content-text li {
+            margin-bottom: 10px; color: rgba(255,255,255,0.8); position: relative; padding-left: 20px;
+        }
+        .content-text li::before {
+            content: '•'; position: absolute; left: 0; color: var(--accent);
+        }
 
-    .tech-stack{ 
-      display:flex; 
-      flex-wrap:wrap; 
-      gap:1rem; 
-      justify-content:center; 
-      margin-top:2rem;
-    }
-    .tech-item{ 
-      background: linear-gradient(135deg, var(--card-bg), var(--glass));
-      padding:12px 24px; 
-      border-radius:8px; 
-      font-weight:500; 
-      border:1px solid rgba(255,255,255,0.06);
-      transition: var(--transition);
-    }
-    .tech-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
-      border-color: var(--fraud-primary);
-    }
+        .content-image {
+            border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06);
+        }
+        .content-image img { width: 100%; display: block; }
 
-    /* ===== ENHANCED BUTTONS ===== */
-    .btn-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 2rem;
-    }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+        .tech-item {
+            padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px; font-size: 14px; color: rgba(255,255,255,0.8);
+        }
 
-    .btn{ 
-      display:inline-flex; 
-      align-items:center; 
-      gap:.5rem; 
-      background: linear-gradient(135deg, var(--btn-gradient-start), var(--btn-gradient-end));
-      color:white; 
-      padding:14px 32px; 
-      border-radius:var(--btn-radius); 
-      text-decoration:none; 
-      font-weight:600; 
-      transition:var(--btn-transition); 
-      border:none; 
-      cursor:pointer;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 15px var(--btn-glow);
-    }
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s ease;
-    }
-    .btn:hover::before {
-      left: 100%;
-    }
-    .btn:hover{ 
-      transform:translateY(-3px);
-      box-shadow: 0 8px 25px var(--btn-glow);
-    }
-    .btn:active {
-      transform: translateY(-1px);
-    }
-    .btn:focus {
-      outline: 2px solid var(--fraud-primary);
-      outline-offset: 2px;
-    }
+        .btn-group { display: flex; gap: 20px; margin-top: 40px; }
+        .btn {
+            padding: 15px 30px; background: white; color: black; border-radius: 50px;
+            font-weight: 600; text-transform: uppercase; font-size: 14px;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn:hover { background: #f0f0f0; }
+        .btn-outline {
+            padding: 15px 30px; border: 1px solid rgba(255,255,255,0.2); color: white;
+            border-radius: 50px; font-weight: 600; text-transform: uppercase; font-size: 14px;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn-outline:hover { background: white; color: black; }
 
-    .btn-outline{ 
-      background:transparent; 
-      border:2px solid var(--fraud-primary); 
-      color:var(--fraud-primary);
-      box-shadow: none;
-      position: relative;
-    }
-    .btn-outline::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, var(--fraud-primary), var(--fraud-secondary));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: -1;
-    }
-    .btn-outline:hover::before {
-      opacity: 1;
-    }
-    .btn-outline:hover{ 
-      background:transparent; 
-      color:white;
-      border-color: transparent;
-      transform: translateY(-3px);
-    }
+        .footer {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; position: relative;
+            padding-bottom: 60px;
+        }
+        .footer-cta {
+             font-family: 'Pixelify Sans', sans-serif; text-align: center;
+             line-height: 1; display: flex; flex-direction: column;
+             align-items: center; gap: 10px; margin-bottom: 50px;
+        }
+        .cta-line { display: block; font-size: clamp(50px, 10vw, 120px); text-transform: uppercase; }
+        /* QR Button Styles */
+        .qr-btn {
+            position: relative;
+            display: inline-block;
+            width: 220px;
+            height: 60px;
+            background: black;
+            text-decoration: none;
+            overflow: hidden;
+            transition: transform 0.3s;
+            z-index: 5;
+            /* Border for structure */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .qr-btn:hover {
+            transform: scale(1.05);
+            border-color: white;
+        }
 
-    .cta-section{ 
-      text-align:center; 
-      padding:80px 0; 
-      background:var(--glass); 
-      border-radius:20px; 
-      margin:4rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--heading-gradient);
-    }
+        #qr-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            opacity: 0.3; /* Subtle background noise */
+            transition: opacity 0.3s;
+        }
+        .qr-btn:hover #qr-canvas {
+            opacity: 0.8; /* More visible on hover */
+        }
 
-    /* ===== FOOTER ===== */
-    footer{ 
-      background:var(); 
-      padding:60px 0 40px; 
-      text-align:center;
-      position: relative;
-    }
-    .social-links{ 
-      display:flex; 
-      justify-content:center; 
-      gap:12px; 
-      margin-bottom:20px;
-    }
-    .social-link{ 
-      width:44px; 
-      height:44px; 
-      border-radius:50%; 
-      background:var(); 
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      color:var(--text); 
-      transition:var(--transition); 
-      text-decoration:none;
-    }
-    .social-link:hover{ 
-      transform:translateY(-6px); 
-      background: linear-gradient(135deg, var(--fraud-primary), var(--fraud-secondary));
-      color: white;
-    }
-    .social-link:focus {
-      outline: 2px solid var(--fraud-primary);
-      outline-offset: 2px;
-    }
-    .copyright{ 
-      margin-top:20px; 
-      color:var(--text-secondary);
-    }
+        .qr-content {
+            position: relative;
+            z-index: 2;
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            pointer-events: none;
+        }
 
-    /* ===== BACK TO TOP BUTTON ===== */
-    #backToTop{ 
-      position:fixed; 
-      right:20px; 
-      bottom:28px; 
-      width:46px;
-      height:46px;
-      border-radius:50%; 
-      background:var(--glass); 
-      display:flex;
-      align-items:center;
-      justify-content:center; 
-      cursor:pointer; 
-      border:none; 
-      box-shadow:0 8px 20px rgba(0,0,0,0.3); 
-      z-index:9999; 
-      transition:var(--transition); 
-      opacity:0; 
-      pointer-events:none;
-      color: var(--text);
-    }
-    #backToTop.visible{ 
-      opacity:1; 
-      pointer-events:auto;
-    }
-    #backToTop:hover {
-      background: linear-gradient(135deg, var(--fraud-primary), var(--fraud-secondary));
-      color: white;
-      transform: translateY(-4px);
-    }
-    #backToTop:focus { 
-      outline: 2px solid var(--fraud-primary); 
-      outline-offset: 2px; 
-    }
+        .qr-text {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: white;
+            background: rgba(0,0,0,0.5); /* Legibility */
+            padding: 2px 8px;
+            text-shadow: 0 0 5px black;
+        }
 
-    /* ===== RESPONSIVE DESIGN ===== */
-    @media (max-width: 992px){
-      .menu-toggle{ display:flex }
-      .nav-container{
-        position: fixed;
-        top:0;
-        right:-120%;
-        width:75%;
-        height:100vh;
-        background:var(--darker-bg);
-        flex-direction:column;
-        justify-content:center;
-        align-items:flex-start;
-        padding:80px 20px;
-        transition:var(--transition);
-        box-shadow:-10px 0 30px rgba(0,0,0,0.35)
-      }
-      .nav-container.open{ right:0 }
-      .nav-button{ width:100%; padding:14px 20px; justify-content:flex-start }
-      .modern-menu{ left:16px; transform:none; right:16px; width:auto }
-      .modern-menu.menu-scrolled{ left:12px; right:12px; transform:none }
-    }
-    @media (max-width: 768px){
-      .hero h1{ font-size:2.5rem }
-      .content-grid{ grid-template-columns:1fr; gap:2rem }
-      .project-meta{ grid-template-columns:1fr }
-      .btn-group{ flex-direction:column; align-items:center }
-      .btn{ width:100%; max-width:300px; justify-content:center }
-      .section-header h2 { font-size: 2rem; }
-    }
+        /* QR Corners */
+        .qr-corner {
+            position: absolute;
+            width: 10px; height: 10px;
+            border: 2px solid white;
+            z-index: 3;
+            transition: all 0.3s;
+        }
+        .top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
+        .top-right { top: 0; right: 0; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
+        .bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
 
-    /* ===== REDUCED MOTION SUPPORT ===== */
-    @media (prefers-reduced-motion: reduce){
-      *, *::before, *::after { 
-        animation-duration: 0.01ms !important; 
-        animation-iteration-count: 1 !important; 
-        transition-duration: 0.01ms !important; 
-      }
-      
-      .security-node, .security-connection {
-        animation: none;
-        opacity: 0.02;
-      }
-      
-      [data-animate] {
-        transition: none;
-        opacity: 1;
-        transform: none;
-      }
-      
-      .btn, .btn-outline, .content-image, .tech-item, .result-card {
-        transition: none;
-      }
-      
-      .btn:hover, .btn-outline:hover, .content-image:hover, .tech-item:hover, .result-card:hover {
-        transform: none;
-      }
-      
-      html {
-        scroll-behavior: auto;
-      }
-    }
+        .qr-btn:hover .qr-corner {
+            width: 15px; height: 15px;
+            background: white; /* Fill corners on hover */
+        }
 
-    /* Reveal skip link on focus */
-    .skip-visible {
-      position: absolute;
-      left: 12px;
-      top: 12px;
-      background: var(--card-bg);
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 6px;
-      z-index: 1200;
-      text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .skip-visible:focus {
-      outline: 2px solid var(--fraud-primary);
-      outline-offset: 2px;
-    }
-  </style>
+        .footer-links {
+            position: absolute; bottom: 40px; width: 100%;
+            display: flex; justify-content: space-between; padding: 0 120px 0 60px;
+            font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+            color: white; font-weight: 500;
+        }
+        .socials { display: flex; gap: 30px; }
+        .socials a { transition: color 0.3s; }
+        .socials a:hover { color: var(--accent); }
+
+        @media(max-width: 992px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+        }
+        /* Mobile */
+        @media(max-width: 768px) {
+            .container, nav, .footer-links { padding-left: 20px; padding-right: 20px; }
+            .scroll-tracker, .cursor-dot { display: none; }
+            .footer-links { flex-direction: column; gap: 20px; align-items: center; }
+            .project-meta { grid-template-columns: 1fr 1fr; }
+            .marquee-item { font-size: 60px; } /* Adjust marquee for mobile */
+        }
+
+        /* --- UFO Footer Marquee --- */
+        .ufo-footer-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .beam-container {
+            position: relative;
+            width: 300px;
+            height: 70px;
+            /* Trapezoid shape */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            display: flex;
+            align-items: flex-end; /* Text at bottom */
+            justify-content: center;
+            padding-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .marquee-track {
+            display: flex;
+            gap: 20px;
+            width: fit-content;
+            z-index: 2;
+        }
+
+        .marquee-item {
+            font-family: 'Pixelify Sans', sans-serif; /* Pixel font matches reference */
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px cyan;
+            -webkit-text-stroke: 0px; /* Reset header style */
+        }
+    </style>
 </head>
 <body>
-  <!-- Fraud Detection Animated Background -->
-  <div class="security-background" aria-hidden="true">
-    <div class="security-node node-1"></div>
-    <div class="security-node node-2"></div>
-    <div class="security-node node-3"></div>
-    <div class="security-node node-4"></div>
-    
-    <!-- Security connections -->
-    <div class="security-connection" style="top: 25%; left: 12%; width: 180px; transform: rotate(25deg);"></div>
-    <div class="security-connection" style="top: 60%; right: 18%; width: 160px; transform: rotate(-20deg);"></div>
-    <div class="security-connection" style="bottom: 35%; left: 22%; width: 200px; transform: rotate(40deg);"></div>
-    <div class="security-connection" style="top: 45%; right: 25%; width: 170px; transform: rotate(-35deg);"></div>
-  </div>
 
-  <!-- progress bar -->
-  <div id="progress" aria-hidden="true"></div>
+    <div id="home"></div>
 
-  <!-- nav -->
-  <nav class="modern-menu" id="modernMenu" role="navigation" aria-label="Main Navigation">
-    <a href="../index.html" class="logo" id="logo"><span class="logo-accent">P</span>ortfolio</a>
-
-    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navContainer" aria-label="Toggle navigation">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <div class="nav-container" id="navContainer" role="menubar">
-      <a href="../index.html" class="nav-button" role="menuitem"><i class="fas fa-home" aria-hidden="true"></i></a>
-      <a href="../about.html" class="nav-button" role="menuitem"><i class="fas fa-user" aria-hidden="true"></i></a>
-      <a href="../Projects.html" class="nav-button selected" role="menuitem"><i class="fas fa-briefcase" aria-hidden="true"></i></a>
-      <button class="nav-button" id="themeToggle" aria-pressed="false" title="Toggle theme"><i class="fas fa-moon" aria-hidden="true"></i></button>
+    <div class="sidebar-nav">
+        <a href="../index.html" aria-label="Home"><i class="fas fa-home"></i></a>
+        <a href="../Projects.html" aria-label="Work"><i class="fas fa-code"></i></a>
+        <a href="#contact" aria-label="Contact"><i class="fas fa-envelope"></i></a>
+        
+        <div class="sidebar-divider"></div>
+        
+        <a href="https://github.com/ZahedShaikh08" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/zahed-shaikh/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://x.com/ZahedShaik4205" target="_blank" aria-label="X">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+            </svg>
+        </a>
+        <a href="https://peerlist.io/zahedshaikh7622" target="_blank" aria-label="Peerlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 17.5V7.5H13C13.7956 7.5 14.5587 7.81607 15.1213 8.37868C15.6839 8.94129 16 9.70435 16 10.5C16 11.2956 15.6839 12.0587 15.1213 12.6213C14.5587 13.1839 13.7956 13.5 13 13.5H9"></path>
+                <path d="M12 3.25C19.4 3.25 21.25 5.1 21.25 12.5C21.25 19.9 19.4 21.75 12 21.75C4.6 21.75 2.75 19.9 2.75 12.5C2.75 5.1 4.6 3.25 12 3.25Z"></path>
+            </svg>
+        </a>
     </div>
-  </nav>
 
-  <!-- main -->
-  <main id="mainContent" tabindex="-1">
-    <!-- Hero Section -->
-    <section class="hero" id="index">
-      <div class="container">
-        <span class="project-tag" data-animate>Security AI</span>
-        <h1 data-animate>AI-Powered Fraud Detection System</h1>
-        <p data-animate>Protecting users from scams and spam through advanced machine learning classification and real-time threat analysis.</p>
+    <div id="webgl-container"></div>
+    <div class="scroll-tracker"><div class="rocket-ship"><i class="fas fa-rocket"></i></div></div>
+    <div class="cursor-dot"></div><div class="cursor-outline"></div>
 
-        <div class="project-meta" data-animate>
-          <div class="meta-item">
-            <h4>Role</h4>
-            <p>ML Engineer & Security Specialist</p>
-          </div>
-          <div class="meta-item">
-            <h4>Tools</h4>
-            <p>Python, TensorFlow, FastAPI, Redis</p>
-          </div>
-          <div class="meta-item">
-            <h4>Category</h4>
-            <p>Security & Fraud Prevention</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <nav>
+        <div class="logo">ZAHED SHAIKH</div>
+    </nav>
 
-    <!-- Project Overview -->
-    <section class="content-section" id="overview">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2>Project Overview</h2>
-          <p class="section-subtitle">Building intelligent defense systems against digital fraud and security threats</p>
-        </div>
-        <div class="content-grid">
-          <div class="content-text" data-animate>
-            <h3>Comprehensive Fraud Protection</h3>
-            <p>This fraud detection system analyzes communication patterns, message content, and user behavior to identify and block fraudulent activities in real-time.</p>
-            <p>By leveraging advanced machine learning algorithms, the system provides robust protection against scams, spam, phishing attempts, and other digital threats.</p>
-            <ul>
-              <li>Real-time message analysis and classification</li>
-              <li>Behavioral pattern recognition</li>
-              <li>Multi-layered threat detection</li>
-              <li>Adaptive learning from new fraud patterns</li>
-            </ul>
-          </div>
-          <div class="content-image" data-animate>
-            <img src="../img/FDS_Project.jpeg" alt="Fraud Detection System Interface" loading="lazy" width="600" height="400">
-          </div>
-        </div>
-      </div>
-    </section>
+    <main>
+        <!-- Hero -->
+        <section class="hero" id="index">
+            <div class="container">
+                <span class="project-tag">Security AI</span>
+                <h1>AI-Powered Fraud Detection System</h1>
+                <p>Protecting users from scams and spam through advanced machine learning classification and real-time threat analysis.</p>
 
-    <!-- The Challenge -->
-    <section class="content-section" style="background: var();" id="challenge">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2>The Challenge</h2>
-          <p class="section-subtitle">Combating the rising tide of digital fraud and security threats</p>
-        </div>
-        <div class="content-grid">
-          <div class="content-image" data-animate>
-            <img src="Projects_img/FMDS-challenge.jpeg" alt="Digital Fraud Challenges" loading="lazy" width="600" height="400">
-          </div>
-          <div class="content-text" data-animate>
-            <h3>Evolving Digital Threats</h3>
-            <p>Traditional rule-based security systems struggle to keep pace with sophisticated and constantly evolving fraud techniques.</p>
-            <p>Key challenges addressed:</p>
-            <ul>
-              <li><strong>Sophisticated scams:</strong> Increasingly complex fraud schemes</li>
-              <li><strong>False positives:</strong> Legitimate communications being blocked</li>
-              <li><strong>Real-time processing:</strong> Need for immediate threat detection</li>
-              <li><strong>Adaptive threats:</strong> Constantly evolving fraud patterns</li>
-            </ul>
-            <p>These challenges result in financial losses, data breaches, and erosion of user trust in digital platforms.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Technical Approach -->
-    <section class="content-section" id="technical">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2>Technical Approach</h2>
-          <p class="section-subtitle">Building robust machine learning models for accurate fraud detection</p>
-        </div>
-        <div class="content-grid">
-          <div class="content-text" data-animate>
-            <h3>Multi-Layered Detection System</h3>
-            <p>Implemented ensemble learning approach combining multiple algorithms for comprehensive fraud detection with minimal false positives.</p>
-
-            <h4>Data Processing</h4>
-            <p>Analyzed 500,000+ labeled messages including spam, phishing attempts, and legitimate communications across multiple channels.</p>
-
-            <h4>Model Architecture</h4>
-            <ul>
-              <li>NLP models for content analysis and intent detection</li>
-              <li>Anomaly detection for behavioral pattern analysis</li>
-              <li>Ensemble classifiers for final threat assessment</li>
-              <li>Real-time processing pipeline for immediate response</li>
-            </ul>
-
-            <div class="tech-stack">
-              <span class="tech-item">Python</span>
-              <span class="tech-item">TensorFlow</span>
-              <span class="tech-item">FastAPI</span>
-              <span class="tech-item">Redis</span>
-              <span class="tech-item">Docker</span>
-              <span class="tech-item">PostgreSQL</span>
-              <span class="tech-item">AWS</span>
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <h4>Role</h4>
+                        <p>ML Engineer & Security Specialist</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Tools</h4>
+                        <p>Python, TensorFlow, FastAPI, Redis</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Category</h4>
+                        <p>Security & Fraud Prevention</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="content-image" data-animate>
-            <img src="Projects_img/FMDS-archtecture.jpeg" alt="Fraud Detection Architecture" loading="lazy" width="600" height="400">
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- Key Features -->
-    <section class="content-section" style="background: var();" id="features">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2>Key Features</h2>
-          <p class="section-subtitle">Comprehensive fraud detection and prevention capabilities</p>
-        </div>
-        <div class="content-grid">
-          <div class="content-image" data-animate>
-            <img src="Projects_img/FMDS-fearutes.jpeg" alt="Fraud Detection Features" loading="lazy" width="600" height="400">
-          </div>
-          <div class="content-text" data-animate>
-            <h3>Intelligent Threat Detection</h3>
+        <!-- Overview -->
+        <section class="content-section" id="overview">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Project Overview</h2>
+                    <p class="section-subtitle">Building intelligent defense systems against digital fraud and security threats</p>
+                </div>
+                <div class="content-grid">
+                    <div class="content-text">
+                        <h3>Comprehensive Fraud Protection</h3>
+                        <p>This fraud detection system analyzes communication patterns, message content, and user behavior to identify and block fraudulent activities in real-time.</p>
+                        <p>By leveraging advanced machine learning algorithms, the system provides robust protection against scams, spam, phishing attempts, and other digital threats.</p>
+                        <ul>
+                            <li>Real-time message analysis and classification</li>
+                            <li>Behavioral pattern recognition</li>
+                            <li>Multi-layered threat detection</li>
+                            <li>Adaptive learning from new fraud patterns</li>
+                        </ul>
+                    </div>
+                    <div class="content-image">
+                        <img src="../img/FDS_studio.png" alt="Fraud Detection System Interface">
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <h4>Real-time Analysis</h4>
-            <p>Processes and classifies messages in milliseconds with high accuracy and low latency.</p>
+        <!-- The Challenge -->
+        <section class="content-section" id="challenge">
+            <div class="container">
+                <div class="section-header">
+                    <h2>The Challenge</h2>
+                    <p class="section-subtitle">Combating the rising tide of digital fraud and security threats</p>
+                </div>
+                <div class="content-grid">
+                    <div class="content-image">
+                        <img src="Projects_img/FMDS-challenge.png" alt="Digital Fraud Challenges" loading="lazy" width="600" height="400">
+                    </div>
+                    <div class="content-text">
+                        <h3>Evolving Digital Threats</h3>
+                        <p>Traditional rule-based security systems struggle to keep pace with sophisticated and constantly evolving fraud techniques.</p>
+                        <p>Key challenges addressed:</p>
+                        <ul>
+                            <li><strong>Sophisticated scams:</strong> Increasingly complex fraud schemes</li>
+                            <li><strong>False positives:</strong> Legitimate communications being blocked</li>
+                            <li><strong>Real-time processing:</strong> Need for immediate threat detection</li>
+                            <li><strong>Adaptive threats:</strong> Constantly evolving fraud patterns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <h4>Multi-Channel Protection</h4>
-            <p>Protects across email, SMS, messaging apps, and social media platforms with consistent detection quality.</p>
+        <!-- Technical Approach -->
+        <section class="content-section" id="technical">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Technical Approach</h2>
+                    <p class="section-subtitle">Building robust machine learning models for accurate fraud detection</p>
+                </div>
+                <div class="content-grid">
+                    <div class="content-text">
+                        <h3>Multi-Layered Detection System</h3>
+                        <p>Implemented ensemble learning approach combining multiple algorithms for comprehensive fraud detection with minimal false positives.</p>
 
-            <h4>Adaptive Learning</h4>
-            <p>Continuously updates detection models based on new fraud patterns and user feedback.</p>
+                        <div class="tech-stack">
+                            <span class="tech-item">Python</span>
+                            <span class="tech-item">TensorFlow</span>
+                            <span class="tech-item">FastAPI</span>
+                            <span class="tech-item">Redis</span>
+                            <span class="tech-item">Docker</span>
+                            <span class="tech-item">PostgreSQL</span>
+                            <span class="tech-item">AWS</span>
+                        </div>
+                    </div>
+                    <div class="content-image">
+                        <img src="Projects_img/FMDS-architecture.png" alt="Fraud Detection Architecture" loading="lazy" width="600" height="400">
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <h4>Threat Intelligence</h4>
-            <p>Integrates with global threat databases and shares intelligence across protected systems.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- Key Features -->
+        <section class="content-section" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Key Features</h2>
+                    <p class="section-subtitle">Comprehensive fraud detection and prevention capabilities</p>
+                </div>
+                <div class="content-grid">
+                    <div class="content-image">
+                        <img src="Projects_img/FMDS-features.png" alt="Fraud Detection Features" loading="lazy" width="600" height="400">
+                    </div>
+                    <div class="content-text">
+                        <h3>Intelligent Threat Detection</h3>
+                        <ul>
+                            <li><strong>Real-time Analysis:</strong> Processes and classifies messages in milliseconds.</li>
+                            <li><strong>Multi-Channel Protection:</strong> Consitent detection across email, SMS, and messaging apps.</li>
+                            <li><strong>Adaptive Learning:</strong> Updates models based on new fraud patterns.</li>
+                            <li><strong>Threat Intelligence:</strong> Integrates with global threat databases.</li>
+                        </ul>
+                    </div>
+                </div>
 
-    <!-- CTA Section -->
-    <section class="cta-section" id="cta">
-      <div class="container">
-        <h2 data-animate>Explore the Project</h2>
-        <p data-animate>Check out the complete implementation and technical details on GitHub</p>
-        <div class="btn-group">
-          <a href="https://github.com/ZahedShaikh08" class="btn" target="_blank" rel="noopener noreferrer" data-animate>
-            <i class="fab fa-github"></i> View on GitHub
-          </a>
-          <a href="../Projects.html" class="btn btn-outline" data-animate>
-            <i class="fas fa-arrow-left"></i> Back to Projects
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+                <div class="btn-group" style="justify-content: center;">
+                    <a href="https://github.com/ZahedShaikh08/Fraud-Detection-System" class="btn" target="_blank">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="https://fraud-detection-system-cmfk.onrender.com/" class="btn-outline" target="_blank">
+                        Try It Live <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-  <!-- Footer -->
-  <footer id="contact">
-    <div class="social-links" role="navigation" aria-label="Social links">
-      <a href="https://github.com/ZahedShaikh08" target="_blank" rel="noreferrer" class="social-link github" aria-label="GitHub">
-        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
-        </svg>
-      </a>
-      
-      <a href="https://www.linkedin.com/in/zahed-shaikh/" target="_blank" rel="noreferrer" class="social-link linkedin" aria-label="LinkedIn">
-        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
-        </svg>
-      </a>
-      
-      <a href="https://x.com/ZahedShaik4205" target="_blank" rel="noreferrer" class="social-link x" aria-label="X">
-        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path>
-        </svg>
-      </a>
-      
-      <a href="https://peerlist.io/zahedshaikh7622" target="_blank" rel="noreferrer" class="social-link peerlist" aria-label="Peerlist">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 17.5V7.5H13C13.7956 7.5 14.5587 7.81607 15.1213 8.37868C15.6839 8.94129 16 9.70435 16 10.5C16 11.2956 15.6839 12.0587 15.1213 12.6213C14.5587 13.1839 13.7956 13.5 13 13.5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M12 3.25C19.4 3.25 21.25 5.1 21.25 12.5C21.25 19.9 19.4 21.75 12 21.75C4.6 21.75 2.75 19.9 2.75 12.5C2.75 5.1 4.6 3.25 12 3.25Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </a>
-      
-      <a class="social-link email" aria-label="Email" href="mailto:zahed8965@gmail.com">
-        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z"></path>
-          <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z"></path>
-        </svg>
-      </a>
-    </div>
-    <div class="copyright">
-      <span>© <span id="year">2025</span> / </span>
-      <strong>Zahed Shaikh</strong>
-    </div>
-  </footer>
+        <!-- Footer -->
+        <section class="footer" id="contact">
+            <div class="footer-cta" aria-label="We can talk now">
+                <span class="cta-line reveal-text">LET'S BUILD</span>
+                <span class="cta-line reveal-text" style="color:var(--accent)">THE FUTURE</span>
+            </div>
+            
+            <a href="https://calendar.app.google/okW6aag7DFm9AdXw7" target="_blank" class="qr-btn reveal-btn" id="qr-contact-btn">
+                <canvas id="qr-canvas"></canvas>
+                <div class="qr-content">
+                    <span class="qr-text">CONTACT ME</span>
+                </div>
+                <!-- Decorative Corners -->
+                <span class="qr-corner top-left"></span>
+                <span class="qr-corner top-right"></span>
+                <span class="qr-corner bottom-left"></span>
+                <span class="qr-corner bottom-right"></span>
+            </a>
 
-  <button id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up" aria-hidden="true"></i></button>
+            <div class="footer-links">
+                <div>© 2026 Zahed Shaikh</div>
+                <div id="local-time" style="color: var(--accent);"></div>
+            </div>
 
-  <script>
-    // Respect reduced motion
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            <!-- UFO Footer Marquee -->
+            <div class="ufo-footer-container">
+                <div class="beam-container">
+                    <div class="marquee-track">
+                        <!-- Content will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    // Elements
-    const menuToggle = document.getElementById('menuToggle');
-    const navContainer = document.getElementById('navContainer');
-    const modernMenu = document.getElementById('modernMenu');
-    const themeToggle = document.getElementById('themeToggle');
-    const progressBar = document.getElementById('progress');
-    const backToTop = document.getElementById('backToTop');
-    const yearElement = document.getElementById('year');
-    const skipToMain = document.getElementById('skipToMain');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <script>
+        // --- Custom Cursor ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
 
-    // Scroll animations with IntersectionObserver
-    function initScrollAnimations() {
-      if (!('IntersectionObserver' in window) || prefersReduced) {
-        // Fallback: show all animated elements
-        document.querySelectorAll('[data-animate]').forEach(el => {
-          el.classList.add('is-visible');
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
         });
-        return;
-      }
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      });
+        // --- Three.js Background ---
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x050505, 0.035); 
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('webgl-container').appendChild(renderer.domElement);
 
-      document.querySelectorAll('[data-animate]').forEach(el => {
-        observer.observe(el);
-      });
-    }
+        const asteroids = [];
+        const geometry = new THREE.IcosahedronGeometry(1, 0); 
+        const material = new THREE.MeshStandardMaterial({ color: 0x333333, flatShading: true, roughness: 0.8, metalness: 0.2 });
 
-    // Focus trap utility
-    let _focusTrapHandler = null;
-    function trapFocusIn(container, enable) {
-      const focusables = container.querySelectorAll('a, button, input, [tabindex]:not([tabindex="-1"])');
-      if (!focusables.length) return;
-      const first = focusables[0], last = focusables[focusables.length-1];
-      function handler(e) {
-        if (e.key !== 'Tab') return;
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault(); last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault(); first.focus();
+        for (let i = 0; i < 60; i++) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = (Math.random() - 0.5) * 50;
+            mesh.position.y = (Math.random() - 0.5) * 50;
+            mesh.position.z = -10 - Math.random() * 50; 
+            const scale = Math.random() * 0.8 + 0.2;
+            mesh.scale.set(scale, scale, scale);
+            mesh.userData = { rotX: (Math.random() - 0.5) * 0.01, rotY: (Math.random() - 0.5) * 0.01 };
+            scene.add(mesh);
+            asteroids.push(mesh);
         }
-      }
-      if (enable) {
-        _focusTrapHandler = handler;
-        document.addEventListener('keydown', handler);
-      } else if (_focusTrapHandler) {
-        document.removeEventListener('keydown', _focusTrapHandler);
-        _focusTrapHandler = null;
-      }
-    }
 
-    // Toggle mobile nav
-    function toggleNav(open) {
-      if (!navContainer || !menuToggle) return;
-      const isOpen = typeof open === 'boolean' ? open : !navContainer.classList.contains('open');
-      navContainer.classList.toggle('open', isOpen);
-      menuToggle.classList.toggle('active', isOpen);
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-      if (isOpen) {
-        const first = navContainer.querySelector('.nav-button');
-        if (first) first.focus();
-        trapFocusIn(navContainer, true);
-      } else {
-        trapFocusIn(navContainer, false);
-        menuToggle.focus();
-      }
-    }
-    if (menuToggle) menuToggle.addEventListener('click', () => toggleNav());
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
 
-    // Theme toggle
-    function initThemeToggle() {
-      if (!themeToggle) return;
-      function applyTheme(theme) {
-        if (theme === 'light') document.documentElement.classList.add('light');
-        else document.documentElement.classList.remove('light');
-        localStorage.setItem('theme', theme);
-        themeToggle.setAttribute('aria-pressed', theme === 'light');
-        const icon = themeToggle.querySelector('i');
-        if (icon) icon.className = theme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-      }
-      const stored = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-      applyTheme(stored);
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.classList.contains('light') ? 'light' : 'dark';
-        applyTheme(current === 'light' ? 'dark' : 'light');
-      });
-    }
-
-    // Smooth scroll for internal anchors
-    function initSmoothScroll() {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          const targetId = this.getAttribute('href');
-          if (!targetId || targetId === '#') return;
-          e.preventDefault();
-          const el = document.querySelector(targetId);
-          if (el) {
-            const top = el.offsetTop - 80;
-            window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
-            if (window.innerWidth < 992) toggleNav(false);
-          }
+        camera.position.z = 5; 
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
         });
-      });
-    }
 
-    // Progress bar and nav scroll
-    function onScrollNav() {
-      if (!modernMenu) return;
-      if (window.scrollY > 40) modernMenu.classList.add('menu-scrolled');
-      else modernMenu.classList.remove('menu-scrolled');
-    }
-    function onScrollProgress() {
-      if (!progressBar) return;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = (window.scrollY / (docHeight || 1)) * 100;
-      progressBar.style.width = Math.min(Math.max(scrolled, 0), 100) + '%';
-    }
-
-    // Back to top
-    function initBackToTop() {
-      if (!backToTop) return;
-      backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
-      });
-    }
-
-    // Initialize on DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', () => {
-      if (yearElement) yearElement.textContent = new Date().getFullYear();
-      if (skipToMain) {
-        skipToMain.classList.remove('sr-only');
-        skipToMain.classList.add('skip-visible');
-      }
-      initScrollAnimations();
-      initThemeToggle();
-      initSmoothScroll();
-      initBackToTop();
-      onScrollNav();
-      onScrollProgress();
-    });
-
-    // Global scroll handler
-    function onScroll() {
-      onScrollNav();
-      onScrollProgress();
-      if (backToTop) {
-        if (window.scrollY > 500) {
-          backToTop.classList.add('visible');
-          backToTop.removeAttribute('aria-hidden');
-        } else {
-          backToTop.classList.remove('visible');
-          backToTop.setAttribute('aria-hidden', 'true');
+        function animate() {
+            requestAnimationFrame(animate);
+            asteroids.forEach(asteroid => {
+                asteroid.rotation.x += asteroid.userData.rotX;
+                asteroid.rotation.y += asteroid.userData.rotY;
+            });
+            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
         }
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
+        animate();
 
-    // Close mobile nav on resize or escape
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 992 && navContainer && navContainer.classList.contains('open')) toggleNav(false);
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (navContainer && navContainer.classList.contains('open')) toggleNav(false);
-      }
-    });
-  </script>
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        const rocket = document.querySelector('.rocket-ship');
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const progress = (scrollPosition / totalHeight) * 100;
+            if(rocket) rocket.style.bottom = `calc(${progress}% + 10px)`;
+        });
+
+        const magneticBtns = document.querySelectorAll('.contact-btn, .btn, .btn-outline');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+            });
+        });
+
+        // --- Footer Reveal ---
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    gsap.fromTo('.reveal-text', 
+                        { y: 50, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
+                    );
+                    gsap.fromTo('.reveal-btn', 
+                        { scale: 0.5, opacity: 0 },
+                        { scale: 1, opacity: 1, duration: 0.5, delay: 0.5, ease: 'back.out(1.7)' }
+                    );
+                    footerObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        const footerSection = document.querySelector('.footer');
+        if(footerSection) footerObserver.observe(footerSection);
+
+        function updateTime() {
+            const timeEl = document.getElementById('local-time');
+            if(timeEl) {
+                const now = new Date();
+                timeEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            }
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // --- 7. Footer Marquee Animation ---
+        const marqueeTrack = document.querySelector('.marquee-track');
+        if (marqueeTrack) {
+            const greetings = ["Hello", "Hola", "Bonjour", "Namaste", "Ciao", "Konnichiwa", "Guten_Tag", "Salam", "Zdravstvuyte", "Anyoung"];
+            
+            // 1. Create a single set of spans
+            const createSpans = () => greetings.map(text => `<span class="marquee-item">${text}</span>`).join('');
+            
+            // 2. Inject double content for seamless loop (Original + Duplicate)
+            marqueeTrack.innerHTML = createSpans() + createSpans() + createSpans() + createSpans(); // Repeat 4 times to ensure width
+
+            // 3. Animate
+            // Move -25% (1 unit out of 4) to create seamless loop
+            gsap.fromTo(marqueeTrack, 
+                { xPercent: 0 },
+                { xPercent: -25, duration: 30, ease: "none", repeat: -1 }
+            );
+        }
+
+        // --- 9. Animated QR Button Logic ---
+        const initQRButton = () => {
+            const canvas = document.getElementById('qr-canvas');
+            if(!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let cols, rows;
+            const size = 6; // pixel block size
+            
+            const resize = () => {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                width = rect.width;
+                height = rect.height;
+                canvas.width = width;
+                canvas.height = height;
+                cols = Math.ceil(width / size);
+                rows = Math.ceil(height / size);
+            };
+            resize();
+            window.addEventListener('resize', resize);
+
+            let frame = 0;
+            const animateQR = () => {
+                requestAnimationFrame(animateQR);
+                frame++;
+                
+                // Update speed based on hover state
+                const isHovering = canvas.parentElement.matches(':hover');
+                const speed = isHovering ? 2 : 10; // Fast on hover, slow on idle
+
+                if (frame % speed === 0) {
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.fillStyle = '#ffffff'; // White pixels
+
+                    for (let r = 0; r < rows; r++) {
+                        for (let c = 0; c < cols; c++) {
+                            const threshold = isHovering ? 0.3 : 0.1; 
+                            if (Math.random() < threshold) {
+                                ctx.fillRect(c * size, r * size, size - 1, size - 1);
+                            }
+                        }
+                    }
+                }
+            };
+            animateQR();
+        };
+        initQRButton();
+    </script>
 </body>
 </html>
