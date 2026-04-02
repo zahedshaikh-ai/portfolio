@@ -313,15 +313,47 @@
             -webkit-text-stroke: 0px; /* Reset header style */
         }
 
-        /* Mobile */
+        /* --- Unified Mobile Responsiveness --- */
         @media(max-width: 768px) {
+            /* General */
             .container, nav, .footer-links { padding-left: 20px; padding-right: 20px; }
-            .scroll-tracker, .cursor-dot { display: none; }
-            .hero-text { font-size: 1rem; }
-            .footer-links { flex-direction: column; gap: 20px; align-items: center; }
+            .scroll-tracker, .cursor-dot, .cursor-outline { display: none; }
+            .project-section { padding: 40px 0; }
+            
+            /* Sidebar Nav -> Bottom Bar */
+            .sidebar-nav {
+                top: auto; bottom: 0; right: 0; transform: none;
+                flex-direction: row; justify-content: space-evenly; width: 100%;
+                background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); 
+                padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1);
+                z-index: 9999;
+            }
+            .sidebar-nav a { width: 35px; height: 35px; font-size: 16px; }
+            .sidebar-divider { width: 1px; height: 20px; margin: 0; }
+            .sidebar-nav a::after { display: none; }
+            body { padding-bottom: 60px; } /* Space for bottom nav */
+
+            /* Hero */
+            .hero { min-height: 60vh; padding-top: 120px; }
+            .hero h1 { font-size: clamp(40px, 12vw, 80px); line-height: 1.1; margin-bottom: 20px; }
+            .hero-text { font-size: 1rem; margin-bottom: 30px; }
+            
+            /* Projects */
             .project-body { padding: 20px; }
-            .project-title { font-size: 1.5rem; }
-            .marquee-item { font-size: 60px; } /* Adjust marquee for mobile */
+            .project-title { font-size: 1.5rem; margin-bottom: 10px; }
+            .project-actions { flex-direction: column; gap: 10px; width: 100%; }
+            .btn-action { width: 100%; justify-content: center; }
+
+            /* Footer */
+            .cta-line { font-size: clamp(40px, 12vw, 100px); }
+            .star-symbol { font-size: clamp(40px, 12vw, 100px); margin: 5px 0; }
+            .ufo-footer-container { bottom: 120px; } /* Lift above footer links & bottom nav */
+            .footer-links { bottom: 70px; flex-direction: column; gap: 10px; align-items: center; } /* Add space above bottom nav */
+            .footer { padding-bottom: 120px; } /* Space for bottom nav, ufo edge-case */
+            
+            /* Marquee */
+            .marquee-item { font-size: 40px; }
+            .beam-container { width: 100%; }
         }
     </style>
 </head>
@@ -337,14 +369,14 @@
         
         <div class="sidebar-divider"></div>
         
-        <a href="https://github.com/ZahedShaikh08" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/zahedshaikh-ai" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
         <a href="https://www.linkedin.com/in/zahed-shaikh/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://x.com/ZahedShaik4205" target="_blank" aria-label="X">
             <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
                 <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
             </svg>
         </a>
-        <a href="https://peerlist.io/zahedshaikh7622" target="_blank" aria-label="Peerlist">
+        <a href="https://peerlist.io/zahedshaikhai" target="_blank" aria-label="Peerlist">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 17.5V7.5H13C13.7956 7.5 14.5587 7.81607 15.1213 8.37868C15.6839 8.94129 16 9.70435 16 10.5C16 11.2956 15.6839 12.0587 15.1213 12.6213C14.5587 13.1839 13.7956 13.5 13 13.5H9"></path>
                 <path d="M12 3.25C19.4 3.25 21.25 5.1 21.25 12.5C21.25 19.9 19.4 21.75 12 21.75C4.6 21.75 2.75 19.9 2.75 12.5C2.75 5.1 4.6 3.25 12 3.25Z"></path>
@@ -389,10 +421,10 @@
                             An AI-powered health diagnosis system that analyzes user symptoms through text or voice input to predict possible diseases with confidence levels. Developed to assist in preliminary diagnosis and health awareness.
                         </p>
                         <div class="project-actions">
-                            <a href="Projects/healixai-case-study.html" class="btn-action">
+                            <a href="projects/healixai-case-study.html" class="btn-action">
                                 Read Case Study <i class="fas fa-arrow-right"></i>
                             </a>
-                            <a href="https://github.com/ZahedShaikh08/MediAI" target="_blank" class="btn-action">
+                            <a href="https://github.com/zahedshaikh-ai/MediAI" target="_blank" class="btn-action">
                                 GitHub <i class="fab fa-github"></i>
                             </a>
                         </div>
@@ -410,10 +442,10 @@
                             A clustering-based system that groups customers into meaningful segments to uncover behavior patterns and enable data-driven marketing strategies. Uses K-Means clustering for optimal segment identification.
                         </p>
                         <div class="project-actions">
-                            <a href="Projects/customer-segmentation-case-study.html" class="btn-action">
+                            <a href="projects/customer-segmentation-case-study.html" class="btn-action">
                                 Read Case Study <i class="fas fa-arrow-right"></i>
                             </a>
-                            <a href="https://github.com/ZahedShaikh08/Customer-Segmentation-with-K-Means" target="_blank" class="btn-action">
+                            <a href="https://github.com/zahedshaikh-ai/Customer-Segmentation-with-K-Means" target="_blank" class="btn-action">
                                 GitHub <i class="fab fa-github"></i>
                             </a>
                         </div>
@@ -431,10 +463,10 @@
                             A robust machine learning solution that detects and filters fraudulent, spam, and phishing messages to enhance digital communication safety. Trained on large datasets to minimize false positives.
                         </p>
                         <div class="project-actions">
-                            <a href="Projects/fraud-detection-case-study.html" class="btn-action">
+                            <a href="projects/fraud-detection-case-study.html" class="btn-action">
                                 Read Case Study <i class="fas fa-arrow-right"></i>
                             </a>
-                            <a href="https://github.com/ZahedShaikh08/Fraud-Detection-System" target="_blank" class="btn-action">
+                            <a href="https://github.com/zahedshaikh-ai/Fraud-Detection-System" target="_blank" class="btn-action">
                                 GitHub <i class="fab fa-github"></i>
                             </a>
                         </div>
@@ -452,10 +484,10 @@
                             A recruitment-focused tool that uses NLP and ML to analyze resumes and automatically rank candidates based on job relevance. Streamlines the hiring process by surfacing top talent instantly.
                         </p>
                         <div class="project-actions">
-                            <a href="Projects/resume-screener-case-study.html" class="btn-action">
+                            <a href="projects/resume-screener-case-study.html" class="btn-action">
                                 Read Case Study <i class="fas fa-arrow-right"></i>
                             </a>
-                            <a href="https://github.com/ZahedShaikh08/ai-resume-ranking" target="_blank" class="btn-action">
+                            <a href="https://github.com/zahedshaikh-ai/ai-resume-ranking" target="_blank" class="btn-action">
                                 GitHub <i class="fab fa-github"></i>
                             </a>
                         </div>

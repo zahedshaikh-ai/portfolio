@@ -4,7 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="img/Zahed.png">
-    <title>Zahed Shaikh | Creative Developer</title>
+    
+    <title>Zahed Shaikh | AI/ML Engineer</title>
+    <meta name="description" content="AI/ML Engineer building real-world AI systems like HealixAI" />
+    <meta name="keywords" content="AI Engineer, Machine Learning, Python, Deep Learning, Zahed Shaikh" />
+    <meta name="author" content="Zahed Shaikh" />
+
+    <link rel="canonical" href="https://zahedshaikh.vercel.app/">
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- Open Graph (LinkedIn / WhatsApp preview) -->
+    <meta property="og:title" content="Zahed Shaikh | AI/ML Engineer">
+    <meta property="og:description" content="AI/ML Engineer building real-world AI systems like HealixAI">
+    <meta property="og:image" content="https://zahedshaikh.vercel.app/img/zahed-preview-img.png">
+    <meta property="og:url" content="https://zahedshaikh.vercel.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Zahed Shaikh Portfolio">
+    <link rel="preload" as="image" href="img/Zahed.png">
+    <link rel="preload" as="image" href="img/zahed-preview-img.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zahed Shaikh | AI/ML Engineer">
+    <meta name="twitter:description" content="AI/ML Engineer building real-world AI systems like HealixAI">
+    <meta name="twitter:image" content="https://zahedshaikh.vercel.app/img/zahed-preview-img.png">
+
+    <!-- Performance -->
+    <link rel="preload" as="image" href="img/Zahed.png">
+
+    <!-- Apple -->
+    <link rel="apple-touch-icon" href="img/Zahed.png">
+
+    <!-- Structured Data (SEO Boost) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Zahed Shaikh",
+        "jobTitle": "AI/ML Engineer",
+        "url": "https://zahedshaikh.vercel.app/"
+    }
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,12 +210,7 @@
         }
         .project-item:hover .p-cat { opacity: 1; transform: translateX(0); }
 
-        /* Mobile Adjustments for Work Section */
-        @media (max-width: 768px) {
-            .project-item { flex-direction: column; gap: 20px; padding: 40px 0; }
-            .p-cat { opacity: 1; transform: none; border: none; padding: 0; color: var(--accent); }
-            .p-name { font-size: 32px; }
-        }
+        /* Mobile Adjustments for Work Section removed and moved to unified block at the end */
 
         /* --- FOOTER REDESIGN --- */
         .footer {
@@ -369,14 +406,7 @@
         .label-name { font-size: 16px; font-weight: 700; text-transform: uppercase; display: block; }
         .label-cat { font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; display: block; }
         
-        /* Mobile */
-        @media(max-width: 768px) {
-            .container, nav, .footer-links { padding-left: 20px; padding-right: 20px; }
-            .scroll-tracker, .cursor-dot { display: none; }
-            .footer-links { flex-direction: column; gap: 20px; align-items: center; }
-            .marquee-item { font-size: 60px; } /* Adjust marquee for mobile */
-            #planet-work-container { height: 60vh; }
-        }
+        /* Mobile Adjustments removed and moved to unified block at the end */
 
         /* --- Content Sections (About, Exp, Learning, Skills) --- */
         .content-section { padding: 100px 0; position: relative; z-index: 2; }
@@ -466,11 +496,53 @@
         }
         .skill-tag:hover i { color: white; }
 
-        /* Mobile specific adjustments for new sections */
+        /* --- Unified Mobile Responsiveness --- */
         @media (max-width: 768px) {
-            .timeline-item:hover { padding-left: 30px; } /* Less movement on mobile */
+            /* General */
+            .container, nav, .footer-links { padding-left: 20px; padding-right: 20px; }
+            .scroll-tracker, .cursor-dot, .cursor-outline { display: none; }
+            .content-section, .work { padding: 60px 0; }
+            
+            /* Sidebar Nav -> Bottom Bar */
+            .sidebar-nav {
+                top: auto; bottom: 0; right: 0; transform: none;
+                flex-direction: row; justify-content: space-evenly; width: 100%;
+                background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); 
+                padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1);
+                z-index: 9999;
+            }
+            .sidebar-nav a { width: 35px; height: 35px; font-size: 16px; }
+            .sidebar-divider { width: 1px; height: 20px; margin: 0; }
+            .sidebar-nav a::after { display: none; }
+            body { padding-bottom: 60px; } /* Space for bottom nav */
+
+            /* Hero */
+            .hero h1 { font-size: clamp(50px, 15vw, 120px); line-height: 1.1; }
+            
+            /* Works */
+            .project-item { flex-direction: column; gap: 20px; padding: 40px 0; }
+            .p-cat { opacity: 1; transform: none; border: none; padding: 0; color: var(--accent); }
+            .p-name { font-size: 32px; }
+            #planet-work-container { height: 60vh; }
+
+            /* Content Sections */
+            .section-header h2 { font-size: clamp(2.5rem, 8vw, 4rem); }
+            .timeline-item:hover { padding-left: 30px; }
             .t-title { font-size: 20px; }
-            #skills-cloud-container { height: 50vh; min-height: 400px; }
+            #skills-cloud-container { height: 40vh; min-height: 400px; }
+
+            /* Footer */
+            .cta-line { font-size: clamp(40px, 12vw, 100px); }
+            .star-symbol { font-size: clamp(40px, 12vw, 100px); margin: 5px 0; }
+            .ufo-footer-container { bottom: 120px; } /* Lift above footer links & bottom nav */
+            .footer-links { bottom: 70px; flex-direction: column; gap: 10px; align-items: center; } /* Add space above bottom nav */
+            .footer { padding-bottom: 120px; } /* Space for bottom nav, ufo edge-case */
+            
+            /* Marquee */
+            .marquee-item { font-size: 40px; }
+
+            /* Preloader */
+            #preloader .percentage { font-size: clamp(50px, 15vw, 100px) !important; }
         }
     </style>
 </head>
@@ -491,14 +563,14 @@
         
         <div class="sidebar-divider"></div>
         
-        <a href="https://github.com/ZahedShaikh08" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/zahedshaikh-ai" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
         <a href="https://www.linkedin.com/in/zahed-shaikh/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://x.com/ZahedShaik4205" target="_blank" aria-label="X">
             <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
                 <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
             </svg>
         </a>
-        <a href="https://peerlist.io/zahedshaikh7622" target="_blank" aria-label="Peerlist">
+        <a href="https://peerlist.io/zahedshaikhai" target="_blank" aria-label="Peerlist">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 17.5V7.5H13C13.7956 7.5 14.5587 7.81607 15.1213 8.37868C15.6839 8.94129 16 9.70435 16 10.5C16 11.2956 15.6839 12.0587 15.1213 12.6213C14.5587 13.1839 13.7956 13.5 13 13.5H9"></path>
                 <path d="M12 3.25C19.4 3.25 21.25 5.1 21.25 12.5C21.25 19.9 19.4 21.75 12 21.75C4.6 21.75 2.75 19.9 2.75 12.5C2.75 5.1 4.6 3.25 12 3.25Z"></path>
@@ -523,7 +595,7 @@
 
     <main>
         <section class="hero" id="home">
-            <p>[ AI Engineer & Full Stack Dev ]</p>
+            <p>[ AI/ML Engineer ]</p>
             <h1>ZAHED<br>SHAIKH</h1>
             <a href="#work" class="hero-btn">View Our Work ↓</a>
         </section>
@@ -857,10 +929,10 @@
 
             // --- Project Satellites ---
             const projects = [
-                { name: "Healix AI", cat: "Healthcare / ML", link: "https://github.com/ZahedShaikh08/HealixAI" },
-                { name: "Segmentation", cat: "Data Analytics", link: "https://github.com/ZahedShaikh08/Customer-Segmentation-with-K-Means" },
-                { name: "Resume Ranker", cat: "NLP / Automation", link: "https://github.com/ZahedShaikh08/ai-resume-ranking" },
-                { name: "Fraud Detect", cat: "Security / AI", link: "https://github.com/ZahedShaikh08/Fraud-Detection-System" }
+                { name: "Healix AI", cat: "Healthcare / ML", link: "https://github.com/zahedshaikh-ai/HealixAI" },
+                { name: "Segmentation", cat: "Data Analytics", link: "https://github.com/zahedshaikh-ai/Customer-Segmentation-with-K-Means" },
+                { name: "Resume Ranker", cat: "NLP / Automation", link: "https://github.com/zahedshaikh-ai/ai-resume-ranking" },
+                { name: "Fraud Detect", cat: "Security / AI", link: "https://github.com/zahedshaikh-ai/Fraud-Detection-System" }
             ];
 
             const satellites = new THREE.Group();
