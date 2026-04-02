@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://zahedshaikh-ai.github.io/portfolio/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <loc>https://zahedshaikh-ai.github.io/zahed-portfolio/</loc>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://zahedshaikh-ai.github.io/portfolio/projects.html</loc>
-    <lastmod>2026-04-02</lastmod>
+    <loc>https://zahedshaikh-ai.github.io/zahed-portfolio/projects.html</loc>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://zahedshaikh-ai.github.io/portfolio/projects/customer-segmentation-case-study.html</loc>
-    <lastmod>2026-04-02</lastmod>
+    <loc>https://zahedshaikh-ai.github.io/zahed-portfolio/projects/customer-segmentation-case-study.html</loc>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://zahedshaikh-ai.github.io/portfolio/projects/fraud-detection-case-study.html</loc>
-    <lastmod>2026-04-02</lastmod>
+    <loc>https://zahedshaikh-ai.github.io/zahed-portfolio/projects/fraud-detection-case-study.html</loc>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://zahedshaikh-ai.github.io/portfolio/projects/healixai-case-study.html</loc>
-    <lastmod>2026-04-02</lastmod>
+    <loc>https://zahedshaikh-ai.github.io/zahed-portfolio/projects/healixai-case-study.html</loc>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://zahedshaikh-ai.github.io/portfolio/projects/resume-screener-case-study.html</loc>
-    <lastmod>2026-04-02</lastmod>
+    <loc>https://zahedshaikh-ai.github.io/zahed-portfolio/projects/resume-screener-case-study.html</loc>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
