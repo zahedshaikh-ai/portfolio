@@ -508,6 +508,7 @@
             /* General */
             .container, nav, .footer-links { padding-left: 20px; padding-right: 20px; }
             .scroll-tracker, .cursor-dot, .cursor-outline { display: none; }
+            * { cursor: auto !important; }
             .content-section, .work { padding: 60px 0; }
             
             /* Sidebar Nav -> Bottom Bar */
@@ -547,17 +548,10 @@
             
             /* Marquee */
             .marquee-item { font-size: 40px; }
-
-            /* Preloader */
-            #preloader .percentage { font-size: clamp(50px, 15vw, 100px) !important; }
         }
     </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div id="preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; z-index: 99999; display: flex; justify-content: center; align-items: center;">
-        <span class="percentage" style="font-family: 'Pixelify Sans', sans-serif; font-size: clamp(60px, 10vw, 150px); font-weight: 700; color: #ffffff;">0%</span>
-    </div>
 
     <div id="home"></div> <!-- Anchor for top -->
 
@@ -720,23 +714,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
     <script>
-        // --- 1. Custom Cursor Logic ---
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+        const isMobile = window.innerWidth <= 768;
 
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
-        });
+        // --- 1. Custom Cursor Logic ---
+        if (!isMobile) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+            });
+        }
 
         // --- 2. Three.js Asteroid Field ---
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x050505, 0.035); 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('webgl-container').appendChild(renderer.domElement);
 
@@ -744,7 +743,7 @@
         const geometry = new THREE.IcosahedronGeometry(1, 0); 
         const material = new THREE.MeshStandardMaterial({ color: 0x333333, flatShading: true, roughness: 0.8, metalness: 0.2 });
 
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < (isMobile ? 25 : 80); i++) {
             const mesh = new THREE.Mesh(geometry, material);
             mesh.position.x = (Math.random() - 0.5) * 50;
             mesh.position.y = (Math.random() - 0.5) * 50;
@@ -764,10 +763,12 @@
 
         camera.position.z = 5; 
         let mouseX = 0, mouseY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) - 0.5;
-            mouseY = (e.clientY / window.innerHeight) - 0.5;
-        });
+        if (!isMobile) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) - 0.5;
+                mouseY = (e.clientY / window.innerHeight) - 0.5;
+            });
+        }
 
         function animate() {
             requestAnimationFrame(animate);
@@ -802,18 +803,20 @@
         }
 
         // --- 5. Magnetic Buttons ---
-        const magneticBtns = document.querySelectorAll('.hero-btn, .contact-btn');
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+        if (!isMobile) {
+            const magneticBtns = document.querySelectorAll('.hero-btn, .contact-btn');
+            magneticBtns.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+                });
             });
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
-            });
-        });
+        }
 
         // --- 6. FOOTER REVEAL ANIMATION (New Intelligence) ---
         const footerObserver = new IntersectionObserver((entries) => {
@@ -880,9 +883,9 @@
             wCamera.position.z = 18;
             wCamera.position.y = 5;
 
-            const wRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            const wRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile });
             wRenderer.setSize(container.clientWidth, container.clientHeight);
-            wRenderer.setPixelRatio(window.devicePixelRatio);
+            wRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             // wRenderer.shadowMap.enabled = true; // Optional: shadows
             container.appendChild(wRenderer.domElement);
 
@@ -1155,21 +1158,23 @@
                     element: tag,
                     x: Math.random() * (container.clientWidth - 100),
                     y: Math.random() * (container.clientHeight - 40),
-                    vx: (Math.random() - 0.5) * 1.5, // Velocity X
-                    vy: (Math.random() - 0.5) * 1.5, // Velocity Y
+                    vx: (Math.random() - 0.5) * (isMobile ? 0.8 : 1.5),
+                    vy: (Math.random() - 0.5) * (isMobile ? 0.8 : 1.5),
                 });
             });
 
             // Mouse Interaction
             let mouseX = -1000, mouseY = -1000;
-            container.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
-                mouseX = e.clientX - rect.left;
-                mouseY = e.clientY - rect.top;
-            });
-            container.addEventListener('mouseleave', () => {
-                mouseX = -1000; mouseY = -1000;
-            });
+            if (!isMobile) {
+                container.addEventListener('mousemove', (e) => {
+                    const rect = container.getBoundingClientRect();
+                    mouseX = e.clientX - rect.left;
+                    mouseY = e.clientY - rect.top;
+                });
+                container.addEventListener('mouseleave', () => {
+                    mouseX = -1000; mouseY = -1000;
+                });
+            }
 
             // Animation Loop
             const animate = () => {
@@ -1219,36 +1224,7 @@
         };
         initFloatingSkills();
 
-        // --- 12. Preloader Logic ---
-        const initPreloader = () => {
-            const progress = { value: 0 };
-            const percentageEl = document.querySelector('.percentage');
-            const preloaderEl = document.getElementById('preloader');
 
-            if (!percentageEl || !preloaderEl) return;
-
-            document.body.style.overflow = 'hidden'; // Lock scroll
-
-            gsap.to(progress, {
-                value: 100,
-                duration: 4,
-                ease: "power1.inOut",
-                onUpdate: () => {
-                    percentageEl.textContent = Math.round(progress.value) + "%";
-                },
-                onComplete: () => {
-                    gsap.to(preloaderEl, {
-                        opacity: 0,
-                        duration: 1,
-                        onComplete: () => {
-                            preloaderEl.style.display = 'none';
-                            document.body.style.overflow = ''; // Unlock scroll
-                        }
-                    });
-                }
-            });
-        };
-        initPreloader();
 
         initPlanetSection();
 

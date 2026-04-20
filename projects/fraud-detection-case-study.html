@@ -290,6 +290,7 @@
             /* General */
             .container, nav, .footer-links { padding-left: 20px; padding-right: 20px; }
             .scroll-tracker, .cursor-dot, .cursor-outline { display: none; }
+            * { cursor: auto !important; }
             .content-section { padding: 40px 0; }
             
             /* Sidebar Nav -> Bottom Bar */
@@ -303,28 +304,36 @@
             .sidebar-nav a { width: 35px; height: 35px; font-size: 16px; }
             .sidebar-divider { width: 1px; height: 20px; margin: 0; }
             .sidebar-nav a::after { display: none; }
-            body { padding-bottom: 60px; } /* Space for bottom nav */
+            body { padding-bottom: 60px; }
 
             /* Hero */
-            .hero { min-height: 50vh; padding-top: 100px; padding-bottom: 40px; }
-            .hero p { font-size: 1rem; }
-            .project-meta { grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
-            .project-tag { margin-bottom: 1rem; }
+            .hero { min-height: auto; padding-top: 100px; padding-bottom: 40px; }
+            .hero h1 { font-size: clamp(28px, 8vw, 50px); line-height: 1.15; }
+            .hero p { font-size: 0.95rem; line-height: 1.6; }
+            .project-meta { grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+            .project-tag { margin-bottom: 1rem; font-size: 12px; }
             
-            /* Content Items */
-            .section-header h2 { font-size: 2.5rem; }
-            .section-subtitle { font-size: 1rem; }
-            .content-text h3 { font-size: 1.5rem; }
-            .btn-group { flex-direction: column; width: 100%; align-items: stretch; }
-            .btn, .btn-outline { justify-content: center; width: 100%; }
-            .tech-stack { justify-content: center; }
+            /* Content Grid & Images */
+            .content-grid { grid-template-columns: 1fr; gap: 30px; }
+            .content-image { border-radius: 8px; }
+            .content-image img { width: 100%; height: auto; max-height: 300px; object-fit: cover; }
+            .section-header { margin-bottom: 30px; }
+            .section-header h2 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+            .section-subtitle { font-size: 0.95rem; }
+            .content-text h3 { font-size: 1.3rem; margin-bottom: 15px; }
+            .content-text p { font-size: 0.95rem; line-height: 1.7; }
+            .content-text li { font-size: 0.95rem; }
+            .btn-group { flex-direction: column; width: 100%; align-items: stretch; gap: 12px; }
+            .btn, .btn-outline { justify-content: center; width: 100%; padding: 14px 20px; font-size: 13px; }
+            .tech-stack { justify-content: flex-start; gap: 8px; }
+            .tech-item { font-size: 12px; padding: 6px 12px; }
 
             /* Footer */
             .cta-line { font-size: clamp(40px, 12vw, 100px); }
             .star-symbol { font-size: clamp(40px, 12vw, 100px); margin: 5px 0; }
-            .ufo-footer-container { bottom: 120px; } /* Lift above footer links & bottom nav */
-            .footer-links { bottom: 70px; flex-direction: column; gap: 10px; align-items: center; } /* Add space above bottom nav */
-            .footer { padding-bottom: 120px; } /* Space for bottom nav, ufo edge-case */
+            .ufo-footer-container { bottom: 120px; }
+            .footer-links { bottom: 70px; flex-direction: column; gap: 10px; align-items: center; }
+            .footer { padding-bottom: 120px; }
             
             /* Marquee */
             .marquee-item { font-size: 40px; }
@@ -588,23 +597,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
     <script>
-        // --- Custom Cursor ---
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+        const isMobile = window.innerWidth <= 768;
 
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
-        });
+        // --- Custom Cursor ---
+        if (!isMobile) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+            });
+        }
 
         // --- Three.js Background ---
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x050505, 0.035); 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('webgl-container').appendChild(renderer.domElement);
 
@@ -612,7 +626,7 @@
         const geometry = new THREE.IcosahedronGeometry(1, 0); 
         const material = new THREE.MeshStandardMaterial({ color: 0x333333, flatShading: true, roughness: 0.8, metalness: 0.2 });
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < (isMobile ? 25 : 60); i++) {
             const mesh = new THREE.Mesh(geometry, material);
             mesh.position.x = (Math.random() - 0.5) * 50;
             mesh.position.y = (Math.random() - 0.5) * 50;
@@ -632,10 +646,12 @@
 
         camera.position.z = 5; 
         let mouseX = 0, mouseY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) - 0.5;
-            mouseY = (e.clientY / window.innerHeight) - 0.5;
-        });
+        if (!isMobile) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) - 0.5;
+                mouseY = (e.clientY / window.innerHeight) - 0.5;
+            });
+        }
 
         function animate() {
             requestAnimationFrame(animate);
@@ -664,18 +680,20 @@
             if(rocket) rocket.style.bottom = `calc(${progress}% + 10px)`;
         });
 
-        const magneticBtns = document.querySelectorAll('.contact-btn, .btn, .btn-outline');
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+        if (!isMobile) {
+            const magneticBtns = document.querySelectorAll('.contact-btn, .btn, .btn-outline');
+            magneticBtns.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+                });
             });
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
-            });
-        });
+        }
 
         // --- Footer Reveal ---
         const footerObserver = new IntersectionObserver((entries) => {
